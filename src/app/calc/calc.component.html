@@ -1,0 +1,39 @@
+<mat-card class="calc-container">
+    <div class="calc-display calc-display-input" [ngClass]="{'calc-result-shown': resultShown}">
+        {{inputExpression}}
+    </div>
+    <div class="calc-display calc-display-result" *ngIf="!hasError; else errorTemplate">
+        {{result}}
+    </div>
+    <ng-template #errorTemplate>
+        <div id="errTxt" class="calc-display calc-display-result calc-error-txt">{{errorText}}</div>
+    </ng-template>
+    <div class="calc-input-board">
+        <div class="calc-input-board-center">
+            <button mat-raised-button *ngFor="let btn of inputBoardBtn" class="calc-input-board-btn calc-digit-btn"
+                (click)="appendInput(btn)" id="btn-{{btn}}">
+                {{btn}}
+            </button>
+        </div>
+        <div class="calc-input-board-edge">
+            <button mat-raised-button color="primary" *ngFor="let operation of operations;index as i" class="calc-input-board-btn"
+                (click)="appendInput(operation)" [innerHTML]="operation" id="btn-op-{{i}}">
+                
+            </button>
+        </div>
+        <div class="calc-input-board-edge">
+            <button id="clearBtn" mat-raised-button color="warn" class="calc-input-board-btn" (click)="clearDisplay()">
+                C
+            </button>
+            <button id="startBrace" mat-raised-button color="primary" class="calc-input-board-btn" (click)="appendInput('(')">
+                (
+            </button>
+            <button id="endBrace" mat-raised-button color="primary" class="calc-input-board-btn" (click)="appendInput(')')">
+                )
+            </button>
+            <button id="resultBtn" mat-raised-button class="calc-input-board-btn calc-result-btn" (click)="calculateResult()">
+                =
+            </button>
+        </div>
+    </div>
+</mat-card>
